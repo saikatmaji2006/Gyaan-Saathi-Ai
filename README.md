@@ -3,7 +3,7 @@
   <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License" />
   <img src="https://img.shields.io/badge/React-18-61DAFB.svg?style=for-the-badge&logo=react" alt="React" />
   <img src="https://img.shields.io/badge/FastAPI-0.115-009688.svg?style=for-the-badge&logo=fastapi" alt="FastAPI" />
-  <img src="https://img.shields.io/badge/Llama_4_Scout-Powered-0452C8.svg?style=for-the-badge&logo=meta" alt="Llama 4 Scout" />
+  <img src="https://img.shields.io/badge/Qwen_3.6_27B-Powered-7C3AED.svg?style=for-the-badge&logo=alibaba-cloud" alt="Qwen 3.6 27B" />
   <br />
   <h1>🚀 GyaanSaathi AI</h1>
   <h3>AI Co-Pilot for Teachers in a Classroom</h3>
@@ -33,7 +33,7 @@ GyaanSaathi is built on a modern, highly scalable microservices architecture opt
 
 ### Backend (AI Engine)
 - **Framework**: FastAPI (Python) — chosen for its asynchronous capabilities and extreme performance.
-- **LLM Engine**: Groq Cloud API featuring **Meta Llama-4 Scout (17B)** for near-instantaneous inference and lesson generation.
+- **LLM Engine**: Groq Cloud API featuring **Qwen 3.6 (27B)** for near-instantaneous inference and lesson generation.
 - **Speech Engine**: Whisper Large v3 (via Groq) for robust fallback transcription, and Edge-TTS for low-latency, natural-sounding Hinglish text-to-speech.
 - **Data Schemas**: Pydantic for rigid validation of AI-generated structured JSON responses.
 
