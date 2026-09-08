@@ -3,7 +3,7 @@
   <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License" />
   <img src="https://img.shields.io/badge/React-18-61DAFB.svg?style=for-the-badge&logo=react" alt="React" />
   <img src="https://img.shields.io/badge/FastAPI-0.115-009688.svg?style=for-the-badge&logo=fastapi" alt="FastAPI" />
-  <img src="https://img.shields.io/badge/Qwen_3.6_27B-Powered-7C3AED.svg?style=for-the-badge&logo=alibaba-cloud" alt="Qwen 3.6 27B" />
+  <img src="https://img.shields.io/badge/GPT__OSS__20B-Powered-7C3AED.svg?style=for-the-badge&logo=openai" alt="GPT-OSS 20B" />
   <br />
   <h1>🚀 GyaanSaathi AI</h1>
   <h3>AI Co-Pilot for Teachers in a Classroom</h3>
@@ -33,7 +33,7 @@ GyaanSaathi is built on a modern, highly scalable microservices architecture opt
 
 ### Backend (AI Engine)
 - **Framework**: FastAPI (Python) — chosen for its asynchronous capabilities and extreme performance.
-- **LLM Engine**: Groq Cloud API featuring **Qwen 3.6 (27B)** for near-instantaneous inference and lesson generation.
+- **LLM Engine**: Groq Cloud API featuring **GPT-OSS 20B** for lightning-fast, structured inference and lesson generation.
 - **Speech Engine**: Whisper Large v3 (via Groq) for robust fallback transcription, and Edge-TTS for low-latency, natural-sounding Hinglish text-to-speech.
 - **Data Schemas**: Pydantic for rigid validation of AI-generated structured JSON responses.
 
@@ -137,6 +137,11 @@ npm install
 npm run dev
 ```
 *The frontend will launch at `http://localhost:5173`*
+
+### 3. Deployment
+For production deployment:
+- **Frontend**: Build using `npm run build` and serve the `/dist` directory via Nginx, Vercel, or Netlify.
+- **Backend**: Deploy the FastAPI app using a production WSGI/ASGI server like Gunicorn with Uvicorn workers. Ensure the `GROQ_API_KEY` is securely set in your environment variables.
 
 > **💡 Demo Mode**: If the backend is not running, the frontend automatically falls back to an intelligent offline Demo Mode using cached JSON data, allowing recruiters and testers to evaluate the UI and UX without setting up API keys!
 

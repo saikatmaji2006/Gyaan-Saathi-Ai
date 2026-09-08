@@ -16,7 +16,7 @@ class QuizRequest(BaseModel):
     topic: str
     class_level: int = 8
     difficulty: str = "medium"
-    question_count: int = 10
+    question_count: int = 5
     language: str = "hinglish"
     session_id: Optional[str] = None
 

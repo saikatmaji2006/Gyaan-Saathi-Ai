@@ -147,6 +147,7 @@ async def ask_voice_copilot(
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
     prompt = f"""You are GyaanSaathi, a friendly AI teaching assistant in an Indian classroom.
+Do NOT include any thinking, reasoning blocks, or XML tags in your output.
 
 The student is currently learning about:
 {context}
@@ -158,6 +159,7 @@ Rules:
 1. Speak in Hinglish (mix of Hindi and English in Latin script).
 2. Keep it VERY short: 1-3 sentences maximum.
 3. No markdown, no emojis, no bullet points, no special characters.
+4. No thinking blocks or internal reasoning — just the direct answer.
 5. Only answer about the topic. If the question is unrelated, gently redirect.
 
 {SAFETY_RULES}"""
