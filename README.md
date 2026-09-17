@@ -68,6 +68,15 @@ The AI launches a verbal quiz session. Students can answer collectively using th
 - **Attempt 2**: Contextual hint generation.
 - **Attempt 3**: Full concept reveal and explanation.
 
+### 6. Cold-Start Backend Loader Gate & Smart Polling
+When deployed on free-tier cloud infrastructure (such as Render), the backend automatically spins down during idle periods. Instead of leaving visitors wondering why AI features aren't responding or misinterpreting the platform as a static frontend demo, GyaanSaathi features an interactive, full-screen **Backend Loader Gate**:
+- **Dynamic Book Mascot**: Transitions across animated poses (`idle`, `thinking`, `listening`, `teaching`, `happy`, and `celebrating`).
+- **Real-Time Health Polling**: Actively pings `/api/health` in the background with automatic fallback mechanisms.
+- **Asymptotic Shimmer Progress Bar**: Accurately conveys wake-up progress up to 99% until verified connectivity instantly triggers 100%.
+- **Rotating "Did You Know?" Educational Facts**: Displays fascinating trivia every 6 seconds to keep educators engaged while the server warms up.
+- **Seamless Auto-Transition**: Triggers a celebratory mascot reaction and a smooth Framer Motion fade-in directly to the app once the backend is healthy.
+- **Demo Mode Bypass**: An optional *"Continue in Demo Mode →"* button allows immediate access for reviewers without waiting.
+
 ---
 
 ## 🔄 Teacher Workflow
@@ -143,7 +152,7 @@ For production deployment:
 - **Frontend**: Build using `npm run build` and serve the `/dist` directory via Nginx, Vercel, or Netlify.
 - **Backend**: Deploy the FastAPI app using a production WSGI/ASGI server like Gunicorn with Uvicorn workers. Ensure the `GROQ_API_KEY` is securely set in your environment variables.
 
-> **💡 Demo Mode**: If the backend is not running, the frontend automatically falls back to an intelligent offline Demo Mode using cached JSON data, allowing recruiters and testers to evaluate the UI and UX without setting up API keys!
+> **💡 Demo Mode & Cold-Start Gate**: When the backend is sleeping on free cloud tiers, visitors are greeted with the interactive **BackendLoader** gate. If the backend is offline or the user wants to jump straight in, the *"Continue in Demo Mode"* bypass provides instant access using rich pre-cached pedagogical content!
 
 ---
 
@@ -151,7 +160,7 @@ For production deployment:
 ```text
 ├── src/
 │   ├── components/
-│   │   ├── common/        # Core UI: BookMascot (Animated SVG), SpeechBubble
+│   │   ├── common/        # Core UI: BookMascot, BackendLoader, SpeechBubble
 │   │   ├── teaching/      # Abstracted pedagogical card components
 │   │   └── voice/         # Audio processing UI: Waveform, MicButton
 │   ├── pages/             # Route views: Landing, ExplanationWorkspace, QuizWorkspace
