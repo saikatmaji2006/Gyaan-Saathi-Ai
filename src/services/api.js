@@ -99,11 +99,26 @@ export async function checkHealth() {
 // Helper: check if backend is available
 export async function isBackendAvailable() {
   try {
-    const { data } = await api.get('/api/health', { timeout: 3000 })
-    return data?.status === 'healthy'
+    const res = await api.get('/api/health', {
+      timeout: 5000,
+      headers: { 'Cache-Control': 'no-cache' },
+    })
+    if (res.status === 200) return true
+    if (res.data?.status === 'healthy') return true
   } catch {
-    return false
+    // Axios request failed (e.g. timeout or cors config mismatch). Try native fetch as fallback:
+    try {
+      const base = (API_URL || 'http://localhost:8000').replace(/\/$/, '')
+      const res = await fetch(`${base}/api/health`, {
+        method: 'GET',
+        cache: 'no-store',
+      })
+      if (res.ok) return true
+    } catch {
+      // Both attempts failed
+    }
   }
+  return false
 }
 
 export default api

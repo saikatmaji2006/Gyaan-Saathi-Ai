@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import BookMascot from '../components/common/BookMascot'
@@ -6,7 +6,7 @@ import SpeechBubble from '../components/common/SpeechBubble'
 import MicButton from '../components/voice/MicButton'
 import Waveform from '../components/voice/Waveform'
 import useAppStore from '../store/useAppStore'
-import { isBackendAvailable, generateLesson, generateQuiz } from '../services/api'
+import { generateLesson, generateQuiz } from '../services/api'
 import { DEMO_LESSON_LINEAR, DEMO_LESSON_PHOTOSYNTHESIS, DEMO_QUIZ } from '../data/demoData'
 
 const STATUS_MAP = {
@@ -21,14 +21,8 @@ export default function Landing() {
   const { voiceState, setVoiceState, setTranscript, setCurrentLesson, setCurrentQuiz, settings } = useAppStore()
   const [localTranscript, setLocalTranscript] = useState('')
   const [recognizer, setRecognizer] = useState(null)
-  const [backendUp, setBackendUp] = useState(false)
   const transcriptRef = useRef('')
   const silenceTimerRef = useRef(null)
-
-  // Check if backend is running
-  useEffect(() => {
-    isBackendAvailable().then(setBackendUp)
-  }, [])
 
   const handleMicClick = () => {
     if (voiceState === 'listening') {
@@ -138,37 +132,35 @@ export default function Landing() {
       subject = 'Mathematics'
     }
 
-    // Try backend first, fallback to demo data
-    if (backendUp) {
-      try {
-        if (isQuiz) {
-          const quiz = await generateQuiz({ 
-            topic, 
-            class_level: classLevel, 
-            difficulty: settings.difficulty, 
-            question_count: settings.questionCount, 
-            language: settings.language 
-          })
-          setCurrentQuiz(quiz)
-          setVoiceState('idle')
-          navigate('/quiz')
-          return
-        } else {
-          const lesson = await generateLesson({ 
-            topic, 
-            class_level: classLevel, 
-            subject, 
-            difficulty: settings.difficulty, 
-            language: settings.language 
-          })
-          setCurrentLesson(lesson)
-          setVoiceState('idle')
-          navigate('/explain')
-          return
-        }
-      } catch (err) {
-        console.warn('Backend call failed, using demo data:', err.message)
+    // Try backend first, fallback to demo data as safety net
+    try {
+      if (isQuiz) {
+        const quiz = await generateQuiz({ 
+          topic, 
+          class_level: classLevel, 
+          difficulty: settings.difficulty, 
+          question_count: settings.questionCount, 
+          language: settings.language 
+        })
+        setCurrentQuiz(quiz)
+        setVoiceState('idle')
+        navigate('/quiz')
+        return
+      } else {
+        const lesson = await generateLesson({ 
+          topic, 
+          class_level: classLevel, 
+          subject, 
+          difficulty: settings.difficulty, 
+          language: settings.language 
+        })
+        setCurrentLesson(lesson)
+        setVoiceState('idle')
+        navigate('/explain')
+        return
       }
+    } catch (err) {
+      console.warn('Backend call failed, using demo data:', err.message)
     }
 
     // Fallback to demo data
@@ -197,14 +189,6 @@ export default function Landing() {
 
   return (
     <div className="page-container flex flex-col">
-      {/* Backend status banner */}
-      {!backendUp && (
-        <div className="bg-[var(--warning-light)] border-b border-[#fed7aa] px-4 py-2 text-center shadow-sm relative z-10">
-          <p className="text-xs text-[var(--warning)] font-medium">
-            ⚡ Running in demo mode — Start the backend for AI-generated content
-          </p>
-        </div>
-      )}
 
       {/* Main Content Area */}
       <section className="flex-1 flex flex-col lg:flex-row items-center justify-center px-6 py-12 gap-12 max-w-6xl mx-auto w-full">

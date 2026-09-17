@@ -447,3 +447,268 @@ code, .font-mono {
 .progress-bar__fill--error {
   background: linear-gradient(90deg, #dc2626, #EF4444);
 }
+
+/* ============================================
+   Backend Loader — Full-screen loading gate
+   ============================================ */
+
+.backend-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #0f1b2d 0%, #1e3a5f 35%, #2563EB 100%);
+  overflow: hidden;
+}
+
+/* ── Floating particles ── */
+.loader-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.loader-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  animation: float-particle linear infinite;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* ── Main content column ── */
+.loader-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 440px;
+  padding: 0 24px;
+}
+
+/* ── Logo ── */
+.loader-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.loader-logo__icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.loader-logo__text {
+  font-family: 'Nunito', 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+/* ── Mascot wrapper ── */
+.loader-mascot {
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));
+}
+
+/* ── Speech / status message ── */
+.loader-speech {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 14px 24px;
+  text-align: center;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-speech__text {
+  font-family: 'Nunito', 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Progress bar ── */
+.loader-progress-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.loader-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loader-progress-bar__fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
+  background-size: 300% 100%;
+  animation: progress-gradient 3s linear infinite;
+  position: relative;
+  z-index: 1;
+}
+
+.loader-progress-bar__shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: 9999px;
+  z-index: 2;
+}
+
+@keyframes progress-gradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.loader-progress-label {
+  font-family: 'Nunito', 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+/* ── Did You Know facts ── */
+.loader-facts {
+  width: 100%;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-fact {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.loader-fact__label {
+  font-family: 'Nunito', 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fbbf24;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.loader-fact__text {
+  font-family: 'Nunito', 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 380px;
+}
+
+/* ── Footer ── */
+.loader-footer {
+  position: absolute;
+  bottom: 24px;
+  font-family: 'Nunito', 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: center;
+  margin: 0;
+  padding: 0 24px;
+}
+
+/* ── Skip button ── */
+.loader-skip-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.loader-skip-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 7px 18px;
+  border-radius: 9999px;
+  font-family: 'Nunito', 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.loader-skip-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .loader-logo__text {
+    font-size: 22px;
+  }
+  .loader-speech {
+    padding: 10px 16px;
+  }
+  .loader-speech__text {
+    font-size: 13px;
+  }
+  .loader-fact__text {
+    font-size: 12px;
+  }
+}
